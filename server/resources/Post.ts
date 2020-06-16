@@ -45,6 +45,7 @@ export default class Message extends Resource {
   @expose("PATCH /:message_id")
   @schema(Message.union(Session).select("message_id", "message", "client_id"))
   static async update({ message_id, message, client_id }) {
+    console.log("HERE", message); // message: null
     const allowed = await Message.verifyAuthor({ message_id, client_id });
     if (!allowed.isError()) {
       const query = `UPDATE messages

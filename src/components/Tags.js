@@ -9,46 +9,70 @@ const Tags = () => {
   const [posts, setPosts] = useState({});
   const [tags, setTags] = useState([]);
   const webSocket = useRef(null);
+  const [relations, setRelations] = useState({});
   useEffect(() => {
-    webSocket.current = new WebSocket(`ws://localhost:3000/api`);
-  }, []);
-
-  useEffect(() => {
-    webSocket.current.onopen = (e) => {
-      console.log("WS connection is now open!");
+    const queries = {};
+    const listeners = {};
+    const ws = new WebSocket(`ws://localhost:3000/api`);
+    console.log("WS connection is now open!");
+    webSocket.current = {
+      request: (path, data = {}, callback = null) => {
+        const message = {
+          [path]: data,
+        };
+        ws.send(JSON.stringify(message));
+        if (callback) queries[path] = callback;
+      },
+      listen: (path, callback) => {
+        listeners[path] = callback;
+      },
+      unlisten: (path) => {
+        delete listeners[path];
+      },
     };
-    webSocket.current.onmessage = (event) => {
+    ws.onmessage = (event) => {
       console.log("Incoming WS message!");
-      const payload = JSON.parse(event.data);
-      const [, data] = Object.entries(payload)[0];
-      console.log(payload);
-      const tagQuery = data.$.query;
-      if (tagQuery !== null) {
-        const arrayOfMessages = data.resources;
-        setPosts({ ...posts, [tagQuery]: arrayOfMessages });
+      const data = JSON.parse(event.data);
+      const [key, payload] = Object.entries(data)[0];
+      if (queries[key]) {
+        queries[key](payload);
+        delete queries[key];
+      } else if (listeners[key]) {
+        listeners[key](payload);
       }
     };
-    webSocket.current.onclose = (event) => {
+    ws.onopen = (e) => {
+      console.log("WS connection is now open!");
+    };
+    ws.onclose = (event) => {
       console.log("WebSocket connection is closed!");
     };
-  });
+  }, []);
 
   const handleChange = (e) => {
     setTag(e.target.value);
   };
   const subscribeToTag = (e) => {
-    const message = {
-      [`SUBSCRIBE /message/${tag}`]: {},
-    };
-    webSocket.current.send(JSON.stringify(message));
+    if (!tag.length) return;
+    webSocket.current.request(`SUBSCRIBE /message/${tag}`, {}, (result) => {
+      const { query } = result;
+      const { payload } = result;
+      setRelations({ ...relations, [tag]: query });
+      setPosts({ ...posts, [query]: payload });
+      webSocket.current.listen(query, (newState) => {
+        setPosts({ ...posts, [query]: newState });
+      });
+    });
     setTag("");
     setTags([...tags, tag]);
   };
   const unsubscribeFromTag = (name) => {
-    webSocket.current.send(
-      JSON.stringify({ [`UNSUBSCRIBE /message/${name}?tag_name=${name}`]: {} })
-    );
-    delete posts[`/message/${name}?tag_name=${name}`];
+    const query = relations[name];
+    webSocket.current.request(`UNSUBSCRIBE ${query}`);
+    webSocket.current.unlisten(query);
+    delete posts[query];
+    delete relations[name];
+    setRelations({ ...relations });
     setPosts({ ...posts });
     setTags(tags.filter((elem) => elem !== name));
   };

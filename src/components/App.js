@@ -15,9 +15,13 @@ function App() {
     setAuthTokens(data);
   };
   useEffect(() => {
-    fetch("http://localhost:3000/api/session").then((data) => {
-      console.log(data);
-    });
+    fetch("http://localhost:3000/api/session", {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      credentials: "include",
+    }).catch((err) => console.log(err));
   }, []);
   return (
     <div>

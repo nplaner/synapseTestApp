@@ -24,6 +24,10 @@ const InputField = () => {
       .catch((error) => {
         console.log(error);
       });
+    setNewPost({
+      message: "",
+      tag_name: "",
+    });
   };
   return (
     <form>

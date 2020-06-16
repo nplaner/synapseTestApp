@@ -11,6 +11,7 @@ const Post = (props) => {
     const { message_id } = info;
     fetch(`http://localhost:3000/api/message/${message_id}`, {
       method: "DELETE",
+      credentials: "include",
     }).catch((err) => console.log(err));
   };
   const toggleEditor = (e) => {
@@ -23,11 +24,16 @@ const Post = (props) => {
     setMessage(e.target.value);
   };
   const handlePatch = (e) => {
+    console.log({ message });
     e.preventDefault();
     const { message_id } = info;
     fetch(`http://localhost:3000/api/message/${message_id}`, {
+      headers: {
+        "Content-Type": "application/json",
+      },
       method: "PATCH",
       body: JSON.stringify({ message }),
+      credentials: "include",
     }).catch((err) => console.log(err));
     setEditMode(false);
   };

@@ -21,6 +21,7 @@ app.use(cookieParser());
 
 app.use((req, res, next) => {
   console.log(" i hit it");
+  console.log(req.body);
   res.cookie("client_id", req.cookies.client_id || uuidv4());
   res.set({
     "Access-Control-Allow-Origin": "http://localhost:8080",
@@ -28,6 +29,11 @@ app.use((req, res, next) => {
     "Access-Control-Allow-Headers": "Origin, Content-Type, X-Auth-Token",
     "Access-Control-Allow-Credentials": true,
   });
+  next();
+});
+app.use((req, res, next) => {
+  console.log("checking for cookies");
+  console.log(req.cookies);
   next();
 });
 enableWs(app);
