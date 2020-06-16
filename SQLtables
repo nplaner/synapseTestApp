@@ -1,0 +1,28 @@
+DROP TABLE tags;
+DROP TABLE messages;
+DROP TABLE users;
+DROP TABLE sessions; 
+
+CREATE TABLE tags (
+  message_id UUID,
+  tag_name varchar(16)
+);
+
+CREATE TABLE messages (
+  message_id uuid PRIMARY KEY DEFAULT uuid_generate_v4(), 
+  message varchar(1024),
+  posted_by UUID,
+  created_at timestamp DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE users (
+  user_id uuid PRIMARY KEY DEFAULT uuid_generate_v4(),
+  username varchar(16) UNIQUE,
+  password varchar(128)
+);
+
+CREATE TABLE sessions (
+  client_id UUID,
+  user_id UUID,
+  created_at timestamp DEFAULT CURRENT_TIMESTAMP
+);

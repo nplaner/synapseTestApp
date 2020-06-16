@@ -4,24 +4,42 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+<<<<<<< HEAD
     "start": "node server/server.js",
     "dev": "NODE_ENV=development webpack-dev-server --open & NODE_ENV=development nodemon server/server.js",
     "build": "NODE_ENV=production && webpack"
+=======
+    "start": "node dist/server/server.js",
+    "dev": "NODE_ENV=development webpack-dev-server --open & NODE_ENV=development nodemon",
+    "build": "tsc && NODE_ENV=production && webpack",
+    "test": "babel-node server/server.js"
+>>>>>>> 202656c43371ae1a221132cdb0dae2dc1b9ed2e1
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "babel-preset-env": "^1.7.0",
+    "babel-register": "^6.26.0",
     "cookie-parser": "^1.4.5",
     "core-util-is": "^1.0.2",
+    "cors": "^2.8.5",
     "express": "^4.17.1",
+    "express-ws": "^4.0.0",
+    "js-cookie": "^2.2.1",
     "path": "^0.12.7",
+    "pg": "^8.2.1",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
-    "react-router-dom": "^5.2.0"
+    "react-router-dom": "^5.2.0",
+    "synapse": "file:../synapse",
+    "ts-node": "^8.10.2",
+    "typescript": "^3.9.5",
+    "uuid": "^8.1.0"
   },
   "devDependencies": {
     "@babel/core": "^7.9.6",
+    "@babel/plugin-proposal-decorators": "^7.10.1",
     "@babel/preset-react": "^7.9.4",
     "babel-loader": "^8.1.0",
     "css-loader": "^3.5.3",
@@ -31,5 +49,12 @@
     "webpack": "^4.43.0",
     "webpack-cli": "^3.3.11",
     "webpack-dev-server": "^3.10.3"
+  },
+  "nodemonConfig": {
+    "watch": [
+      "server"
+    ],
+    "ext": "ts",
+    "exec": "ts-node server/server.ts"
   }
 }
