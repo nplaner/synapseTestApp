@@ -1,19 +1,13 @@
 {
-  "name": "testApp",
+  "name": "testapp",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
   "scripts": {
-<<<<<<< HEAD
-    "start": "node server/server.js",
-    "dev": "NODE_ENV=development webpack-dev-server --open & NODE_ENV=development nodemon server/server.js",
-    "build": "NODE_ENV=production && webpack"
-=======
     "start": "node dist/server/server.js",
     "dev": "NODE_ENV=development webpack-dev-server --open & NODE_ENV=development nodemon",
     "build": "tsc && NODE_ENV=production && webpack",
     "test": "babel-node server/server.js"
->>>>>>> 202656c43371ae1a221132cdb0dae2dc1b9ed2e1
   },
   "keywords": [],
   "author": "",
