@@ -11,7 +11,7 @@ const Register = (props) => {
   const handleSubmit = (e) => {
     setIsRegistereds(true);
     e.preventDefault();
-    fetch(`http://localhost:3000/api/user`, {
+    fetch(`/api/user`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -100,7 +100,6 @@ const Register = (props) => {
       <button
         onClick={handleSubmit}
         type="button"
-        onClick={handleSubmit}
         style={{
           width: "20%",
           display: "flex",

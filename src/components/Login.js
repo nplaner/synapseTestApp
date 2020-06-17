@@ -19,7 +19,7 @@ const Login = (props) => {
   const handleSubmit = (e) => {
     setLoading(true);
     e.preventDefault();
-    fetch(`http://localhost:3000/api/session/`, {
+    fetch(`/api/session/`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

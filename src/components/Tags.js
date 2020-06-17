@@ -29,7 +29,7 @@ const Tags = () => {
   useEffect(() => {
     const queries = {};
     const listeners = {};
-    const ws = new WebSocket(`ws://localhost:3000/api`);
+    const ws = new WebSocket(`ws://${location.host}/api`);
     webSocket.current = {
       request: (path, data = {}, callback = null) => {
         const message = {

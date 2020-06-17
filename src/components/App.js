@@ -27,7 +27,7 @@ function App() {
       setLoading(false);
       return;
     }
-    fetch("http://localhost:3000/api/session", {
+    fetch("/api/session", {
       method: "GET",
       headers: {
         "Content-Type": "application/json",

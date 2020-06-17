@@ -13,7 +13,7 @@ const style = {
 const Feed = (props) => {
   const [userId, setUserId] = useState(null);
   useEffect(() => {
-    fetch("http://localhost:3000/api/session", {
+    fetch("/api/session", {
       method: "GET",
       headers: {
         "Content-Type": "application/json",

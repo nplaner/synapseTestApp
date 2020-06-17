@@ -26,7 +26,7 @@ const InputField = () => {
   };
   const handleSubmit = (e) => {
     e.preventDefault();
-    fetch(`http://localhost:3000/api/message/`, {
+    fetch(`/api/message/`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

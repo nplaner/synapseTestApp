@@ -23,7 +23,7 @@ const Post = (props) => {
   const handleDelete = (e) => {
     e.preventDefault();
     const { message_id } = info;
-    fetch(`http://localhost:3000/api/message/${message_id}`, {
+    fetch(`/api/message/${message_id}`, {
       method: "DELETE",
       credentials: "include",
     }).catch((err) => console.log(err));
@@ -42,7 +42,7 @@ const Post = (props) => {
   const handlePatch = (e) => {
     e.preventDefault();
     const { message_id } = info;
-    fetch(`http://localhost:3000/api/message/${message_id}`, {
+    fetch(`/api/message/${message_id}`, {
       headers: {
         "Content-Type": "application/json",
       },

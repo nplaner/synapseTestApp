@@ -16,17 +16,21 @@ api.use((req, res) => {
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
-
 app.use((req, res, next) => {
   res.cookie("client_id", req.cookies.client_id || uuidv4());
-  res.set({
-    "Access-Control-Allow-Origin": "http://localhost:8080",
-    "Access-Control-Allow-Methods": "GET, POST, PATCH, PUT, DELETE, OPTIONS",
-    "Access-Control-Allow-Headers": "Origin, Content-Type, X-Auth-Token",
-    "Access-Control-Allow-Credentials": true,
-  });
   next();
 });
+if (process.env.NODE_ENV === "development") {
+  app.use((req, res, next) => {
+    res.set({
+      "Access-Control-Allow-Origin": "http://localhost:8080",
+      "Access-Control-Allow-Methods": "GET, POST, PATCH, PUT, DELETE, OPTIONS",
+      "Access-Control-Allow-Headers": "Origin, Content-Type, X-Auth-Token",
+      "Access-Control-Allow-Credentials": true,
+    });
+    next();
+  });
+}
 
 enableWs(app);
 app.ws("/api", api.ws);
