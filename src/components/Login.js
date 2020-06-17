@@ -13,10 +13,8 @@ const Login = (props) => {
     setInput({ ...input, [name]: value });
   };
   const handleSubmit = (e) => {
-    // setAuthTokens(cookie);
-    // setIsLoggedIn(true);
     e.preventDefault();
-    fetch(`http://localhost:3000/api/session/`, {
+    fetch(`/api/session/`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

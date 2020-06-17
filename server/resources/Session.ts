@@ -3,13 +3,13 @@
 /* eslint-disable lines-between-class-members */
 
 import { Resource, State } from "synapse";
-import { Email, Id, Text, Hash, Word, Password } from "synapse/lib/fields";
-import { schema, expose } from "synapse/lib/abstract/Controllable";
-import { field } from "synapse/lib/abstract/Validatable";
+import { Email, Id, Text, Hash, Word, Password } from "synapse/build/lib/fields";
+import { schema, expose } from "synapse/build/lib/abstract/Controllable";
+import { field } from "synapse/build/lib/abstract/Validatable";
 
 import User from "./User";
 
-import db = require("../victoria");
+import db from "../victoria";
 
 export default class Session extends Resource {
   @field(new Id()) user_id: string;

@@ -15,7 +15,7 @@ function App() {
     setAuthTokens(data);
   };
   useEffect(() => {
-    fetch("http://localhost:3000/api/session", {
+    fetch("/api/session", {
       method: "GET",
       headers: {
         "Content-Type": "application/json",

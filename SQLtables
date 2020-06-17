@@ -26,3 +26,7 @@ CREATE TABLE sessions (
   user_id UUID,
   created_at timestamp DEFAULT CURRENT_TIMESTAMP
 );
+
+CREATE TABLE peers (
+  ip varchar(15) PRIMARY KEY
+);

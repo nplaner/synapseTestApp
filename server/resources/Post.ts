@@ -3,13 +3,12 @@
 /* eslint-disable lines-between-class-members */
 
 import { Resource, State } from "synapse";
-import { Email, Id, Text, Hash, Word, Password } from "synapse/lib/fields";
-import { schema, expose, uses, affects } from "synapse/lib/abstract/Controllable";
-import { field } from "synapse/lib/abstract/Validatable";
+import { Email, Id, Text, Hash, Word, Password } from "synapse/build/lib/fields";
+import { schema, expose, uses, affects } from "synapse/build/lib/abstract/Controllable";
+import { field } from "synapse/build/lib/abstract/Validatable";
 import User from "./User";
 import Session from "./Session";
-
-import db = require("../victoria");
+import db from "../victoria";
 
 export default class Message extends Resource {
   @field(new Id()) message_id: string;
@@ -45,7 +44,6 @@ export default class Message extends Resource {
   @expose("PATCH /:message_id")
   @schema(Message.union(Session).select("message_id", "message", "client_id"))
   static async update({ message_id, message, client_id }) {
-    console.log("HERE", message); // message: null
     const allowed = await Message.verifyAuthor({ message_id, client_id });
     if (!allowed.isError()) {
       const query = `UPDATE messages
