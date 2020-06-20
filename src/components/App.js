@@ -12,7 +12,7 @@ import NotFount from "./NotFound";
 import { AuthContext } from "./Auth";
 
 function App() {
-  const cookie = Cookies.get("client_id");
+  const [cookie, setCookie] = useState(Cookies.get("client_id"));
   const [isLoading, setLoading] = useState(false);
   const existingTokens = JSON.parse(localStorage.getItem("session_token"));
   const [authTokens, setAuthTokens] = useState(existingTokens);
@@ -27,7 +27,7 @@ function App() {
       setLoading(false);
       return;
     }
-    fetch("/api/session", {
+    fetch("/api/session/me", {
       method: "GET",
       headers: {
         "Content-Type": "application/json",

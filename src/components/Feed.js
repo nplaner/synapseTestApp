@@ -13,7 +13,7 @@ const style = {
 const Feed = (props) => {
   const [userId, setUserId] = useState(null);
   useEffect(() => {
-    fetch("/api/session", {
+    fetch("/api/session/me", {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -24,7 +24,7 @@ const Feed = (props) => {
       .then((res) => {
         setUserId(res.user_id);
       });
-  });
+  }, []);
   const { posts } = props;
   const arrayOfPosts = [];
   Object.values(posts).forEach((array) => {

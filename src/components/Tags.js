@@ -12,7 +12,7 @@ const Tags = () => {
       case "add": {
         return { ...state, [query]: payload };
       }
-      case "remove": {  
+      case "remove": {
         const copy = { ...state };
         delete copy[query];
         return { ...copy };

@@ -14,9 +14,11 @@ import db from "../victoria";
 export default class Session extends Resource {
   @field(new Id()) user_id: string;
   @field(new Id()) client_id: string;
-  @expose("GET /")
+
+  @expose("GET /me")
   @schema(Session.schema.select("client_id"))
   static async getSession({ client_id }) {
+    console.log("I MAKE A QUERY TO THE DATABASE");
     const query = `SELECT * FROM sessions WHERE client_id ='${client_id}'`;
     const sessionResult = await db.query(query);
     const session = sessionResult.rows[0];

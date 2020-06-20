@@ -16,42 +16,42 @@ const Post = (props) => {
   const [message, setMessage] = useState("");
   const { info, userId } = props;
   const [hover, setHover] = useState(false);
-  const owner = userId === info.posted_by;
+  // const owner = userId === info.posted_by;
   // const owner = true;
   const s = new Date(info.created_at);
   const time = `${s.getHours()}:${s.getMinutes()} ${s.toDateString()}`;
-  const handleDelete = (e) => {
-    e.preventDefault();
-    const { message_id } = info;
-    fetch(`/api/message/${message_id}`, {
-      method: "DELETE",
-      credentials: "include",
-    }).catch((err) => console.log(err));
-  };
-  const toggleEditor = (e) => {
-    setMessage(info.message);
-    e.preventDefault();
-    setEditMode(!editMode);
-    // setMessage("");
-  };
+  // const handleDelete = (e) => {
+  //   e.preventDefault();
+  //   const { message_id } = info;
+  //   fetch(`/api/message/${message_id}`, {
+  //     method: "DELETE",
+  //     credentials: "include",
+  //   }).catch((err) => console.log(err));
+  // };
+  // const toggleEditor = (e) => {
+  //   setMessage(info.message);
+  //   e.preventDefault();
+  //   setEditMode(!editMode);
+  //   // setMessage("");
+  // };
   const handleChange = (e) => {
     console.log(e.target.value);
     e.preventDefault();
     setMessage(e.target.value);
   };
-  const handlePatch = (e) => {
-    e.preventDefault();
-    const { message_id } = info;
-    fetch(`/api/message/${message_id}`, {
-      headers: {
-        "Content-Type": "application/json",
-      },
-      method: "PATCH",
-      body: JSON.stringify({ message }),
-      credentials: "include",
-    }).catch((err) => console.log(err));
-    setEditMode(false);
-  };
+  // const handlePatch = (e) => {
+  //   e.preventDefault();
+  //   const { message_id } = info;
+  //   fetch(`/api/message/${message_id}`, {
+  //     headers: {
+  //       "Content-Type": "application/json",
+  //     },
+  //     method: "PATCH",
+  //     body: JSON.stringify({ message }),
+  //     credentials: "include",
+  //   }).catch((err) => console.log(err));
+  //   setEditMode(false);
+  // };
   const toggleHover = () => {
     setHover(!hover);
   };
@@ -107,12 +107,12 @@ const Post = (props) => {
             placeholder="Edit message..."
             onChange={handleChange}
           />
-          <button style={style} type="button" onClick={handlePatch}>
+          {/* <button style={style} type="button" onClick={handlePatch}>
             Submit!
-          </button>
+          </button> */}
         </form>
       )}
-      {owner && !editMode && (
+      {/* {owner && !editMode && (
         <div
           style={{
             display: "flex",
@@ -128,7 +128,7 @@ const Post = (props) => {
             Delete
           </button>
         </div>
-      )}
+      )} */}
     </div>
   );
 };
