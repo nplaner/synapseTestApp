@@ -7,7 +7,7 @@ const path = require("path");
 const enableWs = require("express-ws");
 
 const app = express();
-const port = 3000;
+const port = 3001;
 const api = synapse(path.resolve(__dirname, "./resources"));
 
 api.use((req, res) => {
@@ -16,9 +16,12 @@ api.use((req, res) => {
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
+app.use((req, res, next) => {
+  res.cookie("client_id", req.cookies.client_id || uuidv4());
+  next();
+});
 if (process.env.NODE_ENV === "development") {
   app.use((req, res, next) => {
-    console.log("we're in development");
     res.set({
       "Access-Control-Allow-Origin": "http://localhost:8080",
       "Access-Control-Allow-Methods": "GET, POST, PATCH, PUT, DELETE, OPTIONS",
@@ -29,9 +32,6 @@ if (process.env.NODE_ENV === "development") {
   });
 }
 
-app.use((req, res, next) => {
-  res.cookie("client_id", req.cookies.client_id || uuidv4());
-});
 enableWs(app);
 app.ws("/api", api.ws);
 app.use("/api", api.http);

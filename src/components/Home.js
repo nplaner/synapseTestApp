@@ -4,7 +4,7 @@ import Tags from "./Tags";
 
 const Home = () => {
   return (
-    <div>
+    <div style={{ display: "flex", flexDirection: "row", justifyContent: "space-between" }}>
       <InputField />
       <Tags />
     </div>
